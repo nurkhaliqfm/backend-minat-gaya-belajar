@@ -7,10 +7,10 @@ require("dotenv").config();
 var privateKey = fs.readFileSync("./key/private.key");
 
 const userRefreshToken = async (req, res) => {
-  const { id, client_secret, client_id, auth_id } = req;
+  const { id, client_secret, client_id, id_auth } = req;
 
   const getUsersCredentials = await db.sequelize.query(
-    `SELECT oauth_authorization_codes.id, oauth_authorization_codes.authorization_codes, oauth_access_tokens.access_token, oauth_access_tokens.access_token_expires_at, oauth_refresh_tokens.refresh_token, oauth_refresh_tokens.refresh_token_expires_at FROM oauth_authorization_codes INNER JOIN oauth_access_tokens ON oauth_authorization_codes.id = oauth_access_tokens.auth_id INNER JOIN oauth_refresh_tokens ON oauth_authorization_codes.id = oauth_refresh_tokens.auth_id WHERE oauth_authorization_codes.id = ${auth_id} && oauth_authorization_codes.user_id = ${id}`
+    `SELECT oauth_authorization_codes.id, oauth_authorization_codes.authorization_codes, oauth_access_tokens.access_token, oauth_access_tokens.access_token_expires_at, oauth_refresh_tokens.refresh_token, oauth_refresh_tokens.refresh_token_expires_at FROM oauth_authorization_codes INNER JOIN oauth_access_tokens ON oauth_authorization_codes.id = oauth_access_tokens.id_auth INNER JOIN oauth_refresh_tokens ON oauth_authorization_codes.id = oauth_refresh_tokens.id_auth WHERE oauth_authorization_codes.id = ${id_auth} && oauth_authorization_codes.id_user = ${id}`
   );
 
   if (!getUsersCredentials)
@@ -24,7 +24,7 @@ const userRefreshToken = async (req, res) => {
     userCredentials.refresh_token,
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
-      if (err || userCredentials.id !== decoded.auth_id)
+      if (err || userCredentials.id !== decoded.id_auth)
         return res.status(401).json({
           message: "The request is forbidden by the server",
           hint: "Access Credential is Wrong",
@@ -45,7 +45,7 @@ const userRefreshToken = async (req, res) => {
             id: id,
             clientId: client_id,
             clientSecret: client_secret,
-            auth_id: auth_id,
+            id_auth: id_auth,
             grant_type: process.env.GRANT_TYPE,
           },
         },
@@ -57,7 +57,7 @@ const userRefreshToken = async (req, res) => {
         {
           id: id,
           clientSecret: client_secret,
-          auth_id: auth_id,
+          id_auth: id_auth,
         },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: "30d" }
@@ -67,18 +67,18 @@ const userRefreshToken = async (req, res) => {
         {
           access_token: accessToken,
           access_token_expires_at: access_token_expires_at,
-          auth_id: auth_id,
+          id_auth: id_auth,
         },
-        { where: { auth_id: auth_id } }
+        { where: { id_auth: id_auth } }
       );
 
       await oauth_refresh_tokens.update(
         {
           refresh_token: refreshToken,
           refresh_token_expires_at: refresh_token_expires_at,
-          auth_id: auth_id,
+          id_auth: id_auth,
         },
-        { where: { auth_id: auth_id } }
+        { where: { id_auth: id_auth } }
       );
 
       res.status(200).json({

@@ -7,13 +7,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       tgl_lahir: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
+        defaultValue: null,
       },
       foto: {
         type: DataTypes.STRING,
+        defaultValue: null,
       },
       hp: {
         type: DataTypes.STRING,
+        defaultValue: null,
       },
       id_school: {
         type: DataTypes.INTEGER,
