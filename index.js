@@ -29,7 +29,9 @@ app.use("/logout", require("./routes/logout"));
 
 app.use("/users", require("./routes/api/users"));
 app.use("/admin", require("./routes/api/admin"));
-app.use("/event", require("./routes/api/event"));
+app.use("/events", require("./routes/api/event"));
+app.use("/bundle-soal", require("./routes/api/bundle_soal"));
+
 app.use("/referensi", require("./routes/api/referensi"));
 app.use("/soal", require("./routes/api/soal"));
 
