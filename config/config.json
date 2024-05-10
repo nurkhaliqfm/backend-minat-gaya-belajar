@@ -1,0 +1,22 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "caseclosedaptx4869",
+    "database": "db_peminatan_tipe_belajar",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1"
+  }
+}
