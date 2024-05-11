@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: null,
       },
+      id_type: {
+        type: DataTypes.INTEGER,
+        defaultValue: null,
+      },
     },
     {
       freezeTableName: true,

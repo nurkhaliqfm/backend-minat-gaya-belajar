@@ -10,7 +10,7 @@ const getEvent = async (req, res) => {
 
     const dataEvents = await events.findAll({
       where: { id_school: getUserBiodata.id_school },
-      attributes: ["name"],
+      attributes: ["id", "name", "id_type"],
       include: {
         model: ref_school,
         as: "ref_school",
