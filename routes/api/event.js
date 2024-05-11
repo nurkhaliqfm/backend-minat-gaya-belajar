@@ -4,5 +4,7 @@ const eventControllers = require("../../controllers/eventControllers");
 const verifyJWT = require("../../middleware/verifyJWT");
 
 router.get("/", verifyJWT, eventControllers.getEvent);
+router.get("/result/:id_event", verifyJWT, eventControllers.getEventHistory);
+router.post("/event-history", verifyJWT, eventControllers.createEventHistory);
 
 module.exports = router;

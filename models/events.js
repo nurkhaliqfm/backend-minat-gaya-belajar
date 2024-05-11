@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: null,
       },
-      id_type: {
+      id_kode_soal: {
         type: DataTypes.INTEGER,
         defaultValue: null,
       },
