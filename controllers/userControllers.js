@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { users, biodata_users } = require("../models");
 const db = require("../models");
 const bcrypt = require("bcrypt");
@@ -197,6 +198,41 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const getMyData = async (req, res) => {
+  const { id } = req;
+
+  try {
+    const getBiodata = await biodata_users.findOne({
+      where: { id_user: id },
+      attributes: ["full_name", "hp", "isKuliah"],
+    });
+
+    res
+      .status(200)
+      .json({ message: "Data User Berhasil Diambil", data: getBiodata });
+  } catch (error) {
+    console.error("Gagal Mendapatkan Data User:", error);
+    res.status(400).json({ message: "Permintaan Tidak Valid" });
+  }
+};
+
+const updateBiodata = async (req, res) => {
+  const { id } = req;
+  const dataBiodata = req.body;
+  console.log(dataBiodata);
+
+  try {
+    await biodata_users.update(dataBiodata, {
+      where: { id_user: id },
+    });
+
+    res.status(200).json({ message: "Data User Berhasil Diupdate" });
+  } catch (error) {
+    console.error("Gagal Mengupdate Data User:", error);
+    res.status(400).json({ message: "Permintaan Tidak Valid" });
+  }
+};
+
 // Export
 module.exports = {
   getListUser,
@@ -205,4 +241,6 @@ module.exports = {
   deleteUser,
   updateAdmin,
   createAdmin,
+  getMyData,
+  updateBiodata,
 };
