@@ -63,7 +63,6 @@ const getEventHistory = async (req, res) => {
 const createEventHistory = async (req, res) => {
   const { id } = req;
   const userEventResult = req.body;
-  // const t = await db.sequelize.transaction();
 
   try {
     const getUserBiodata = await biodata_users.findOne({
@@ -109,7 +108,7 @@ const createEventHistory = async (req, res) => {
     });
 
     await events_history.destroy({
-      where: { id_event: userEventResult.id_event },
+      where: { id_event: userEventResult.id_event, id_user: id },
     });
 
     userResultName.forEach(async (item) => {
