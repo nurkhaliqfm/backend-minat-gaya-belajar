@@ -1,7 +1,7 @@
 RewriteEngine On
-RewriteRule ^$ http://127.0.0.1:50011/ [P,L]
+RewriteRule ^$ https://127.0.0.1:5011/ [P,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ http://127.0.0.1:5011/$1 [P,L]
+RewriteRule ^(.*)$ https://127.0.0.1:5011/$1 [P,L]
 
 # Header set Access-Control-Allow-Origin '*'
