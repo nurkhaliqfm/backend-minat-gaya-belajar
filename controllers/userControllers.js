@@ -1,4 +1,9 @@
-const { users, biodata_users } = require("../models");
+const {
+  users,
+  biodata_users,
+  events_history,
+  ref_result,
+} = require("../models");
 const db = require("../models");
 const bcrypt = require("bcrypt");
 
@@ -260,6 +265,26 @@ const updateBiodata = async (req, res) => {
   }
 };
 
+const getEventHistory = async (req, res) => {
+  const { id } = req;
+  const { id_event } = req.params;
+  console.log("oyoyoyoyo", id_event);
+  try {
+    const dataEventsHistory = await events_history.findAll({
+      where: { id_user: id, id_event: id_event },
+      attributes: ["id", "id_event"],
+    });
+
+    res.status(200).json({
+      message: "Berhasil Mendapatkan Data History Event",
+      data: dataEventsHistory,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(400).json({ message: "Gagal Mendapatkan Data  History Event" });
+  }
+};
+
 // Export
 module.exports = {
   getListUser,
@@ -271,4 +296,5 @@ module.exports = {
   getMyData,
   updateBiodata,
   registBulkPeserta,
+  getEventHistory,
 };

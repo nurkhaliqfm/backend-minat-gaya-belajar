@@ -50,6 +50,8 @@ const getEventHistory = async (req, res) => {
       },
     });
 
+    console.log("params:", { id_user: id, id_event: id_event });
+
     res.status(200).json({
       message: "Berhasil Mendapatkan Data History Event",
       data: dataEventsHistory,
