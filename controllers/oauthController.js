@@ -50,9 +50,6 @@ const userLogin = async (req, res) => {
       .status(401)
       .json({ message: "These credentials do not match our records." });
 
-  // const encryptedPassword = bcrypt.hashSync(password, 10);
-  // console.log(encryptedPassword);
-
   bcrypt.compare(password, userData.password).then(async (match) => {
     if (!match)
       return res
