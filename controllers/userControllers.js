@@ -1,7 +1,34 @@
-const { where } = require("sequelize");
 const { users, biodata_users } = require("../models");
 const db = require("../models");
 const bcrypt = require("bcrypt");
+
+const registBulkPeserta = async (req, res) => {
+  let { peserta } = req.body;
+
+  try {
+    peserta.forEach(async (user) => {
+      const createUser = await users.create({
+        username: `${user.username}`,
+        email: `${user.username}@schuler.id`,
+        password: bcrypt.hashSync(`${user.pasword}`, 10),
+        client_id: 2,
+        role_id: 2,
+      });
+
+      await biodata_users.create({
+        id_user: createUser.id,
+        full_name: user.full_name,
+        ket: user.ket,
+        id_school: 2,
+      });
+    });
+    res.status(200).json({ message: "Berhasil Membuat User" });
+  } catch (error) {
+    await t.rollback();
+    console.error("Gagal Mendapatkan Kegiatan:", error);
+    res.status(400).json({ message: "Permintaan Tidak Valid" });
+  }
+};
 
 const registUser = async (req, res) => {
   let userData = req.body;
@@ -243,4 +270,5 @@ module.exports = {
   createAdmin,
   getMyData,
   updateBiodata,
+  registBulkPeserta,
 };

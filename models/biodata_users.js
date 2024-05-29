@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: null,
       },
+      ket: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
       id_school: {
         type: DataTypes.INTEGER,
         defaultValue: null,
