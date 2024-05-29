@@ -14,9 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1"
+    "username": "codefm_schuler_id",
+    "password": "(dM4}*l3SE7v",
+    "database": "codefm_peminatan_tipe_belajar",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }
