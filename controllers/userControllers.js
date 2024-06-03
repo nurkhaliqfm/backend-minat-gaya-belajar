@@ -251,7 +251,6 @@ const getMyData = async (req, res) => {
 const updateBiodata = async (req, res) => {
   const { id } = req;
   const dataBiodata = req.body;
-  console.log(dataBiodata);
 
   try {
     await biodata_users.update(dataBiodata, {
@@ -268,7 +267,7 @@ const updateBiodata = async (req, res) => {
 const getEventHistory = async (req, res) => {
   const { id } = req;
   const { id_event } = req.params;
-  console.log("oyoyoyoyo", id_event);
+
   try {
     const dataEventsHistory = await events_history.findAll({
       where: { id_user: id, id_event: id_event },

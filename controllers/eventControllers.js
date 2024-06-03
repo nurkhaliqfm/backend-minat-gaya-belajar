@@ -5,6 +5,7 @@ const {
   ref_school,
   ref_kode_option,
   ref_result,
+  users,
 } = require("../models");
 const db = require("../models");
 
@@ -56,6 +57,50 @@ const getEventHistory = async (req, res) => {
       message: "Berhasil Mendapatkan Data History Event",
       data: dataEventsHistory,
     });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(400).json({ message: "Gagal Mendapatkan Data  History Event" });
+  }
+};
+
+const getEventHistoryBySchool = async (req, res) => {
+  const { id } = req;
+  const { id_event } = req.params;
+  try {
+    const currentUser = await users.findOne({
+      where: { id: id },
+    });
+
+    if (currentUser.role_id === 1) {
+      const dataEventsHistory = await events_history.findAll({
+        where: { id_event: id_event },
+        attributes: ["id"],
+        include: [
+          {
+            model: users,
+            as: "users",
+            attributes: ["id"],
+            include: {
+              model: biodata_users,
+              as: "biodata_users",
+              attributes: ["full_name", "isKuliah", "ket"],
+            },
+          },
+          {
+            model: ref_result,
+            as: "ref_result",
+            attributes: ["name"],
+          },
+        ],
+      });
+
+      res.status(200).json({
+        message: "Berhasil Mendapatkan Data History Event",
+        data: dataEventsHistory,
+      });
+    } else {
+      res.status(403).json({ message: "Unauthorized" });
+    }
   } catch (error) {
     console.error("Error:", error);
     res.status(400).json({ message: "Gagal Mendapatkan Data  History Event" });
@@ -140,4 +185,5 @@ module.exports = {
   getEvent,
   createEventHistory,
   getEventHistory,
+  getEventHistoryBySchool,
 };

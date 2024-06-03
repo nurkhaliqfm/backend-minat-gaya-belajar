@@ -27,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       as: "ref_result",
     });
+    EventsHistory.belongsTo(models.users, {
+      foreignKey: {
+        name: "id_user",
+      },
+      as: "users",
+    });
   };
 
   return EventsHistory;
