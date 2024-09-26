@@ -5,9 +5,9 @@ const verifyJWT = require("../../middleware/verifyJWT");
 
 router.get("/me", verifyJWT, usersControllers.getMyData);
 router.get(
-  "/me/history/:id_event",
-  verifyJWT,
-  usersControllers.getEventHistory
+	"/me/history/:id_event",
+	verifyJWT,
+	usersControllers.getEventHistory
 );
 router.patch("/me", verifyJWT, usersControllers.updateBiodata);
 // router.post("/bulk-peserta", usersControllers.registBulkPeserta);

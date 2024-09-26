@@ -68,8 +68,6 @@ const userLogin = async (req, res) => {
 					"The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed.",
 			});
 
-		console.log("im here");
-
 		const authorization_codes = uuidv4();
 		const access_token_expires_at = Date.now() + 1800 * 1000;
 		const refresh_token_expires_at = Date.now() + 24 * 60 * 60 * 30 * 1000;
@@ -115,6 +113,7 @@ const userLogin = async (req, res) => {
 				refresh_token_expires_at: refresh_token_expires_at,
 				id_auth: createAuthCodes.id,
 			});
+			console.log("im here");
 
 			res.status(200).json({
 				name: userData.biodata_users.full_name,
