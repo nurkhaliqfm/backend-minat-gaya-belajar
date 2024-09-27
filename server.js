@@ -10,8 +10,8 @@ const corsOptions = require("./config/corsOptions");
 const app = express();
 
 app.use((req, res, next) => {
-  res.set("Cache-Control", "no-store, no-cache, must-revalidate");
-  next();
+	res.set("Cache-Control", "no-store, no-cache, must-revalidate");
+	next();
 });
 
 // * Middleware
@@ -38,7 +38,7 @@ app.use("/soal", require("./routes/api/soal"));
 app.use(errHandlers);
 
 db.sequelize.sync().then(() => {
-  app.listen(5011, () => {
-    console.log("Server up and running on port 5011....");
-  });
+	app.listen(4012, () => {
+		console.log("Server up and running on port 5011....");
+	});
 });
