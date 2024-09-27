@@ -39,6 +39,6 @@ app.use(errHandlers);
 
 db.sequelize.sync().then(() => {
 	app.listen(4012, () => {
-		console.log("Server up and running on port 5011....");
+		console.log("Server up and running on port 4012....");
 	});
 });
