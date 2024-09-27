@@ -14,19 +14,19 @@ require("dotenv").config();
 var privateKey = fs.readFileSync("./key/private.key");
 
 const userLogin = async (req, res) => {
-	let { email, password, grant_type } = req.body;
+	let { username, password, grant_type } = req.body;
 	const token = req.headers.authorization.split(" ")[1];
 	const [id_client, client_secret] = Buffer.from(token, "base64")
 		.toString("utf-8")
 		.split(":");
 
-	if (!email || !password)
+	if (!username || !password)
 		return res
 			.status(401)
 			.json({ message: "These credentials do not match our records." });
 
 	const userData = await users.findOne({
-		where: { email: email },
+		where: { email: username },
 		include: [
 			{
 				model: biodata_users,
@@ -113,7 +113,6 @@ const userLogin = async (req, res) => {
 				refresh_token_expires_at: refresh_token_expires_at,
 				id_auth: createAuthCodes.id,
 			});
-			console.log("im here");
 
 			res.status(200).json({
 				name: userData.biodata_users.full_name,
